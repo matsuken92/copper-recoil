@@ -81,7 +81,7 @@
       </section>
 
       <section class="about section-light section-pad" id="about" aria-labelledby="about-title">
-        <div class="about__visual reveal" aria-hidden="true"><div class="about__art"></div><div class="about__caption"><span>Copper Recoil</span><span>Tokyo / Est. 2024</span></div><p>Four voices.<br /><em>One resonance.</em></p></div>
+        <div class="about__visual reveal" aria-hidden="true"><div class="about__art"></div><div class="about__caption"><span>Copper Recoil</span><span>Tokyo / Est. 2026</span></div><p>Four voices.<br /><em>One resonance.</em></p></div>
         <div class="about__copy reveal">
           <p class="eyebrow">03 / About the band</p>
           <h2 id="about-title">重なった音が、<br />余韻になる。</h2>
@@ -97,7 +97,24 @@
 
       <section class="music section-dark section-pad" id="music" aria-labelledby="music-title">
         <div class="section-heading reveal"><div><p class="eyebrow">04 / Music</p><h2 id="music-title">Music</h2></div><p class="section-jp">音の向こう側へ。</p></div>
-        <div class="music__pending reveal"><p class="music__status">Coming soon<span aria-hidden="true">.</span></p><div><p>ただいま準備中です。</p><p>最新情報は公式SNSをご覧ください。</p><a class="text-link" href="#social-links">公式SNSへ <span aria-hidden="true">↗</span></a></div></div>
+        <article class="music-track reveal" aria-labelledby="track-title">
+          <div class="music-track__info"><p class="eyebrow">01 / Listen</p><h3 id="track-title">光の呼吸 <small class="music-track__version">(Studio version)</small></h3><p class="music-track__artist">Copper Recoil</p></div>
+          <div class="music-player">
+            <audio id="track-audio" preload="none" controlslist="nodownload noremoteplayback" disableremoteplayback hidden></audio>
+            <div class="music-player__controls" hidden>
+              <button class="music-player__toggle" type="button" aria-label="光の呼吸を再生" aria-controls="track-audio">
+                <svg class="music-player__play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z" /></svg>
+                <svg class="music-player__pause" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M6 5h4v14H6zm8 0h4v14h-4z" /></svg>
+              </button>
+              <div class="music-player__timeline">
+                <input class="music-player__seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="光の呼吸の再生位置" aria-valuetext="0分0秒" disabled />
+                <div class="music-player__time" aria-hidden="true"><span class="music-player__elapsed">0:00</span><span class="music-player__duration">—:—</span></div>
+              </div>
+            </div>
+            <p class="music-player__status" role="status"></p>
+            <noscript><p class="music-player__fallback">試聴するにはJavaScriptを有効にしてください。</p></noscript>
+          </div>
+        </article>
       </section>
 
       <section class="contact section-light section-pad" id="contact" aria-labelledby="contact-title">
