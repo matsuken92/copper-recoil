@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="女性ボーカル・ロックバンド Copper Recoil のオフィシャルウェブサイト。" />
-    <meta name="theme-color" content="#ff6d55" />
+    <meta name="theme-color" content="#111d35" />
     <title>Copper Recoil — Official Website</title>
     <link rel="preload" href="assets/top.png" as="image" />
     <link rel="stylesheet" href="styles.css" />
@@ -12,97 +12,90 @@
   <body>
     <a class="skip-link" href="#main">本文へ移動</a>
 
-    <aside class="rail" aria-label="サイトメニュー">
-      <button class="menu-trigger" type="button" aria-expanded="false" aria-controls="site-menu">
-        <span aria-hidden="true">ME<br />NU</span><span class="sr-only">メニューを開く</span>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Copper Recoil トップへ">Copper Recoil<span>Official website</span></a>
+      <nav class="header-nav" aria-label="主要セクション">
+        <a href="#live">Live</a><a href="#music">Music</a><a href="#about">About</a>
+      </nav>
+      <button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog">
+        <span>Menu</span><i aria-hidden="true"></i>
       </button>
-      <p class="rail__word">COPPER RECOIL / TOKYO</p>
-      <a class="rail__scroll" href="#news"><span>SCROLL</span><i aria-hidden="true"></i></a>
-    </aside>
+    </header>
 
-    <div class="menu-panel" id="site-menu" aria-hidden="true">
+    <dialog class="menu-panel" id="site-menu" aria-labelledby="menu-title">
       <div class="menu-panel__top">
-        <span>CR — 2026</span>
-        <button class="menu-close" type="button"><span>Close</span><i aria-hidden="true"></i></button>
+        <span id="menu-title">Copper Recoil / Menu</span>
+        <button class="menu-close" type="button" aria-label="メニューを閉じる"><span>Close</span><i aria-hidden="true"></i></button>
       </div>
       <nav class="menu-panel__nav" aria-label="メインナビゲーション">
-        <a href="#top"><small>01</small><span>Top</span></a>
-        <a href="#news"><small>02</small><span>News</span></a>
-        <a href="#live"><small>03</small><span>Live</span></a>
-        <a href="#about"><small>04</small><span>About</span></a>
-        <a href="#music"><small>05</small><span>Music</span></a>
-        <a href="#contact"><small>06</small><span>Contact</span></a>
+        <a href="#top"><small>00</small><span>Top</span></a>
+        <a href="#news"><small>01</small><span>News</span></a>
+        <a href="#live"><small>02</small><span>Live</span></a>
+        <a href="#about"><small>03</small><span>About</span></a>
+        <a href="#music"><small>04</small><span>Music</span></a>
+        <a href="#contact"><small>05</small><span>Contact</span></a>
       </nav>
-      <div class="menu-panel__foot"><p>Female-fronted pop rock band from Tokyo.</p><div><a href="#contact">Instagram</a><a href="#contact">YouTube</a><a href="#contact">X</a></div></div>
-    </div>
+      <div class="menu-panel__foot"><nav class="social-links" aria-label="公式SNS"><a href="https://x.com/Copper_Recoil" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/copperrecoil_band/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.tiktok.com/@copper.recoil" target="_blank" rel="noopener noreferrer">TikTok ↗</a></nav></div>
+    </dialog>
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <header class="hero__topbar">
-          <a class="brand" href="#top" aria-label="Copper Recoil トップへ">
-            <span>Copper<br />Recoil</span>
-          </a>
-          <div class="hero__meta"><span>Tokyo, Japan</span><span>Est. 2024</span></div>
-        </header>
-
-        <div class="hero__photo" role="img" aria-label="女性ボーカルと男性3人の楽器メンバーで演奏する Copper Recoil のイメージ"></div>
-        <div class="hero__shape hero__shape--blue" aria-hidden="true"></div>
-        <div class="hero__shape hero__shape--yellow" aria-hidden="true"></div>
-
+        <div class="hero__photo" role="img" aria-label="静かな風景の中で、巨大な機械を見つめる少女のイラスト"></div>
         <div class="hero__copy">
-          <p class="eyebrow reveal">Female-fronted / Pop Rock</p>
-          <h1 id="hero-title" class="reveal"><span>Copper</span><span>Recoil<i>.</i></span></h1>
-          <div class="hero__tagline reveal"><p>ポップに弾けて、<br />ロックに残る。</p><a href="#music" aria-label="音源情報を見る">▶</a></div>
+          <h1 id="hero-title" class="reveal"><span>Copper</span><span>Recoil<span class="hero__period">.</span></span></h1>
+          <p class="hero__tagline reveal">その音は、静けさの先へ。</p>
+          <a class="text-link hero__listen reveal" href="#music">Explore our music <span aria-hidden="true">↗</span></a>
         </div>
-
-        <p class="hero__vertical" aria-hidden="true">BRIGHT / LOUD / UNFINISHED</p>
-        <div class="hero__ticker" aria-hidden="true"><div>POP WITH A KICK ・ COPPER RECOIL ・ NEW DEMO COMING SOON ・ POP WITH A KICK ・ COPPER RECOIL ・ NEW DEMO COMING SOON ・</div></div>
-        <div class="hero__show"><p><span>Next show</span><strong>2026.09.19</strong></p><p>Shimokitazawa<br />DaisyBar</p><a href="#live">Details ↗</a></div>
+        <p class="hero__edition" aria-hidden="true">SOUND / SPACE / RESONANCE</p>
+        <div class="hero__bottom">
+          <a class="hero__scroll" href="#news"><span>Scroll to discover</span><span aria-hidden="true">↓</span></a>
+          <a class="hero__show" href="#live"><span class="eyebrow">Live schedule</span><time class="hero__show-date" datetime="12-19">12.19 <small>Sat</small></time><span class="hero__show-venue">錦糸町パピーズ · 17:40〜</span><span aria-hidden="true">↗</span></a>
+        </div>
       </section>
 
-      <section class="news section-light" id="news" aria-labelledby="news-title">
-        <div class="section-heading reveal"><p class="section-no">01 / 06</p><div><p class="eyebrow">Latest updates</p><h2 id="news-title">News<span>!</span></h2></div><p class="section-jp">お知らせ</p></div>
+      <section class="news section-light section-pad" id="news" aria-labelledby="news-title">
+        <div class="section-heading reveal"><div><p class="eyebrow">01 / Latest updates</p><h2 id="news-title">News</h2></div><p class="section-jp">お知らせ</p></div>
         <div class="news-list">
-          <article class="news-item reveal"><time datetime="2026-08-10">2026.08.10</time><span class="tag coral">LIVE</span><h3><a href="#live">9月19日 下北沢 DaisyBar「Copper Circuit #01」出演決定</a></h3><a href="#live" aria-label="ライブ情報へ">↗</a></article>
-          <article class="news-item reveal"><time datetime="2026-07-28">2026.07.28</time><span class="tag blue">MUSIC</span><h3><a href="#music">Copper Recoil オリジナル楽曲5曲を公開しました</a></h3><a href="#music" aria-label="音源情報へ">↗</a></article>
-          <article class="news-item reveal"><time datetime="2026-07-06">2026.07.06</time><span class="tag yellow">INFO</span><h3><a href="#about">Copper Recoil オフィシャルサイトをオープン</a></h3><a href="#about" aria-label="プロフィールへ">↗</a></article>
+          <article class="news-item reveal"><span class="tag">Live</span><div class="news-item__body"><h3><a href="#live">12月19日（土）錦糸町パピーズに出演します</a></h3><p>出演時間は17:40〜。会場でお待ちしています。</p></div><span class="row-arrow" aria-hidden="true">↗</span></article>
+          <article class="news-item reveal"><span class="tag">Info</span><div class="news-item__body"><h3>公式SNSを開設しました</h3><p>X・Instagram・TikTokで、Copper Recoilの活動をお届けします。</p><nav class="social-links" aria-label="開設した公式SNS"><a href="https://x.com/Copper_Recoil" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/copperrecoil_band/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.tiktok.com/@copper.recoil" target="_blank" rel="noopener noreferrer">TikTok ↗</a></nav></div></article>
         </div>
       </section>
 
-      <section class="live" id="live" aria-labelledby="live-title">
-        <div class="live__head reveal"><p class="section-no">02 / 06</p><div><p class="eyebrow">Upcoming shows</p><h2 id="live-title">Live!</h2><p>次の音が鳴る場所。</p></div></div>
+      <section class="live section-dark section-pad" id="live" aria-labelledby="live-title">
+        <div class="section-heading reveal"><div><p class="eyebrow">02 / On stage</p><h2 id="live-title">Live</h2></div><p class="section-jp">次の音が鳴る場所。</p></div>
         <div class="show-list">
-          <article class="show-card reveal"><div class="show-date"><span>SEP</span><strong>19</strong><small>2026 / SAT</small></div><div><p>Shimokitazawa DaisyBar</p><h3>Copper Circuit #01</h3><p>OPEN 18:00 / START 18:30<br />ADV ¥2,400 / DOOR ¥2,900 + 1D</p></div><a href="#contact">Reserve <span>↗</span></a></article>
-          <article class="show-card reveal"><div class="show-date"><span>OCT</span><strong>11</strong><small>2026 / SUN</small></div><div><p>Kichijoji Planet K</p><h3>Voltage in Bloom</h3><p>OPEN 17:30 / START 18:00<br />ADV ¥2,500 / DOOR ¥3,000 + 1D</p></div><a href="#contact">Reserve <span>↗</span></a></article>
+          <article class="show-card reveal"><div class="show-date" aria-label="12月19日 土曜日"><span>December</span><strong>19<small>Sat</small></strong></div><div class="show-info"><p>Kinshicho / Live House PAPPY’S</p><h3>錦糸町パピーズ</h3><p class="show-performance">出演 <time datetime="17:40">17:40</time>〜</p></div><a class="text-link" href="https://pappys.jimdofree.com/schedule/" target="_blank" rel="noopener noreferrer">会場スケジュール <span aria-hidden="true">↗</span></a></article>
         </div>
-        <p class="demo-note">※ 上記は初期デザイン確認用のデモ情報です。</p>
       </section>
 
-      <section class="about section-light" id="about" aria-labelledby="about-title">
-        <div class="about__poster" aria-hidden="true"><p>4<br />PIECE</p><span>POP × ROCK</span></div>
+      <section class="about section-light section-pad" id="about" aria-labelledby="about-title">
+        <div class="about__visual reveal" aria-hidden="true"><div class="about__art"></div><div class="about__caption"><span>Copper Recoil</span><span>Tokyo / Est. 2024</span></div><p>Four voices.<br /><em>One resonance.</em></p></div>
         <div class="about__copy reveal">
-          <p class="section-no">03 / 06</p><p class="eyebrow">About the band</p>
-          <h2 id="about-title">カラフルな衝動を、<br />4人の音に。</h2>
-          <p class="about__lead">Copper Recoil は、女性ボーカルと男性のギター・ベース・ドラムによる、東京発の4ピース・ロックバンド。親しみやすいメロディと、ライブで跳ねる骨太なバンドサウンドを鳴らします。</p>
-          <dl class="members"><div><dt>Vocal</dt><dd>— あん</dd></div><div><dt>Guitar</dt><dd>— まつけん</dd></div><div><dt>Bass</dt><dd>— マッピィ</dd></div><div><dt>Drums</dt><dd>— シン</dd></div></dl>
+          <p class="eyebrow">03 / About the band</p>
+          <h2 id="about-title">重なった音が、<br />余韻になる。</h2>
+          <p class="about__lead">Copper Recoil は、女性ボーカルと男性のギター・ベース・ドラムによる、東京発の4ピース・ロックバンド。親しみやすいメロディと、ライブで響く骨太なバンドサウンドを鳴らします。</p>
+          <dl class="members"><div><dt>Vocal</dt><dd>あん</dd></div><div><dt>Guitar</dt><dd>まつけん</dd></div><div><dt>Bass</dt><dd>マッピィ</dd></div><div><dt>Drums</dt><dd>シン</dd></div></dl>
         </div>
       </section>
 
-      <section class="music" id="music" aria-labelledby="music-title">
-        <div class="music__art reveal"><div class="disc"><div><span>CR—001</span><i></i><small>33⅓</small></div></div><p>COPPER RECOIL / ORIGINAL SONGS</p></div>
-        <div class="music__copy reveal"><p class="section-no">04 / 06</p><p class="eyebrow">Listen / Songs</p><h2 class="sr-only" id="music-title">Music</h2>
-          <ol class="tracks"><li><button type="button"><span>01</span><strong>光の呼吸</strong><b>▶</b></button></li><li><button type="button"><span>02</span><strong>少女A</strong><b>▶</b></button></li><li><button type="button"><span>03</span><strong>名前のない青</strong><b>▶</b></button></li><li><button type="button"><span>04</span><strong>進め</strong><b>▶</b></button></li><li><button type="button"><span>05</span><strong>ブルージートーン</strong><b>▶</b></button></li></ol>
-          <p class="demo-note">Demo player — 音源はまだ接続されていません。</p>
-        </div>
+      <section class="music section-dark section-pad" id="music" aria-labelledby="music-title">
+        <div class="section-heading reveal"><div><p class="eyebrow">04 / Music</p><h2 id="music-title">Music</h2></div><p class="section-jp">音の向こう側へ。</p></div>
+        <div class="music__pending reveal"><p class="music__status">Coming soon<span aria-hidden="true">.</span></p><div><p>ただいま準備中です。</p><p>最新情報は公式SNSをご覧ください。</p><a class="text-link" href="#social-links">公式SNSへ <span aria-hidden="true">↗</span></a></div></div>
       </section>
 
-      <section class="contact section-light" id="contact" aria-labelledby="contact-title">
-        <div><p class="section-no">05 / 06</p><p class="eyebrow">Booking / Message</p></div>
-        <div class="contact__main reveal"><h2 id="contact-title">Let’s make<br />some noise!</h2><p>ライブのお誘い、チケット予約、その他のお問い合わせ窓口は準備中です。</p><p class="contact__state"><span>Contact</span><strong>Coming soon</strong></p></div>
+      <section class="contact section-light section-pad" id="contact" aria-labelledby="contact-title">
+        <div><p class="eyebrow">05 / Booking & message</p><h2 id="contact-title">Get in touch<span>.</span></h2></div>
+        <div class="contact__copy reveal">
+          <p>ライブのお誘い、チケット予約、<br />その他のお問い合わせはメールにてどうぞ。</p>
+          <button class="contact__reveal" type="button" aria-controls="contact-details" aria-expanded="false" hidden>メールアドレスを表示 <span aria-hidden="true">↗</span></button>
+          <div class="contact__details" id="contact-details" hidden><a class="contact__email"></a><button class="contact__copy-button" type="button">コピー</button></div>
+          <p class="contact__status" role="status"></p>
+          <noscript><p class="contact__fallback">メールアドレスを表示するには、JavaScriptを有効にしてください。</p></noscript>
+        </div>
       </section>
     </main>
 
-    <footer class="footer"><div class="footer__brand"><strong>Copper Recoil</strong></div><div class="footer__social"><a href="#contact">Instagram</a><a href="#contact">YouTube</a><a href="#contact">X</a></div><p>© 2026 Copper Recoil</p><a href="#top">Back to top ↑</a></footer>
+    <footer class="footer"><a class="footer__brand" href="#top">Copper Recoil</a><nav class="footer__social social-links" id="social-links" aria-label="公式SNS"><a href="https://x.com/Copper_Recoil" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/copperrecoil_band/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.tiktok.com/@copper.recoil" target="_blank" rel="noopener noreferrer">TikTok ↗</a></nav><p>© 2026 Copper Recoil</p><a class="footer__top" href="#top">Back to top ↑</a></footer>
     <script src="script.js"></script>
   </body>
 </html>
