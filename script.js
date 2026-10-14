@@ -43,7 +43,6 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
 
 const trackSources = {
   'track-audio': ['YXNzZXRzL21lZGlh', 'L2hpa2FyaV9ub19r', 'b2t5dS5tcDM/dj1k', 'NzZhMzYxMjQ0NzY='],
-  'susume-audio': ['YXNzZXRzL21lZGlh', 'L3N1c3VtZS5tcDM='],
 };
 const stopTracks = new Map();
 

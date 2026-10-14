@@ -14,7 +14,7 @@ python3 -m http.server 4173
 
 ## Music
 
-Musicセクションで「光の呼吸 (Studio version)」（`assets/media/hikari_no_kokyu.mp3`）と「進め」（`assets/media/susume.mp3`）を試聴できます。別の曲を再生すると、それまで再生していた曲は一時停止します。専用プレーヤーで再生・一時停止・シークに対応し、自動再生はしません。音源は再生ボタンを押した時に初めて読み込みます。JavaScriptが無効な場合は有効化の案内を表示します。
+Musicセクションで「光の呼吸 (Studio version)」（`assets/media/hikari_no_kokyu.mp3`）のみを試聴できます。専用プレーヤーで再生・一時停止・シークに対応し、自動再生はしません。音源は再生ボタンを押した時に初めて読み込みます。JavaScriptが無効な場合は有効化の案内を表示します。
 
 シークの動作確認にはHTTP Range対応の配信サーバーを使用してください。上記のPython簡易サーバーでは、再生位置の変更が正しく動作しない場合があります。
 
