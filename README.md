@@ -1,6 +1,7 @@
 # Copper Recoil
 
-女性ボーカルの4ピース・ロックバンド Copper Recoil のオフィシャルサイトです。
+女性ボーカルの4ピース・ロックバンド Copper Recoil のオフィシャルサイトです。  
+https://copper-recoil.com/
 
 ## Preview
 
