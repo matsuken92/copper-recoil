@@ -41,100 +41,126 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   });
 }
 
-const trackAudio = document.querySelector('#track-audio');
-const trackControls = document.querySelector('.music-player__controls');
-const trackToggle = document.querySelector('.music-player__toggle');
-const trackPlayIcon = document.querySelector('.music-player__play');
-const trackPauseIcon = document.querySelector('.music-player__pause');
-const trackSeek = document.querySelector('.music-player__seek');
-const trackElapsed = document.querySelector('.music-player__elapsed');
-const trackDuration = document.querySelector('.music-player__duration');
-const trackStatus = document.querySelector('.music-player__status');
-let trackRequested = false;
-let trackRequestId = 0;
+const trackSources = {
+  'track-audio': ['YXNzZXRzL21lZGlh', 'L2hpa2FyaV9ub19r', 'b2t5dS5tcDM/dj1k', 'NzZhMzYxMjQ0NzY='],
+};
+const stopTracks = new Map();
 
-function formatTrackTime(seconds) {
-  const total = Math.max(0, Math.floor(seconds || 0));
-  return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`;
-}
+document.querySelectorAll('.music-player').forEach((player) => {
+  const source = trackSources[player.querySelector('audio').id];
+  const title = player.closest('.music-track').querySelector('h3').textContent.trim();
+  const trackAudio = player.querySelector('audio');
+  const trackControls = player.querySelector('.music-player__controls');
+  const trackToggle = player.querySelector('.music-player__toggle');
+  const trackPlayIcon = player.querySelector('.music-player__play');
+  const trackPauseIcon = player.querySelector('.music-player__pause');
+  const trackSeek = player.querySelector('.music-player__seek');
+  const trackElapsed = player.querySelector('.music-player__elapsed');
+  const trackDuration = player.querySelector('.music-player__duration');
+  const trackStatus = player.querySelector('.music-player__status');
+  let trackRequested = false;
+  let trackRequestId = 0;
 
-function updateTrackButton(playing) {
-  trackRequested = playing;
-  trackToggle.setAttribute('aria-label', playing ? '光の呼吸を一時停止' : '光の呼吸を再生');
-  trackPlayIcon.toggleAttribute('hidden', playing);
-  trackPauseIcon.toggleAttribute('hidden', !playing);
-}
+  function formatTrackTime(seconds) {
+    const total = Math.max(0, Math.floor(seconds || 0));
+    return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`;
+  }
 
-function updateTrackTime() {
-  const duration = Number.isFinite(trackAudio.duration) ? trackAudio.duration : 0;
-  const current = trackAudio.currentTime;
-  trackSeek.disabled = duration <= 0 || Boolean(trackAudio.error);
-  trackSeek.max = duration;
-  trackSeek.value = current;
-  trackSeek.style.setProperty('--progress', `${duration ? current / duration * 100 : 0}%`);
-  trackSeek.setAttribute('aria-valuetext', `${Math.floor(current / 60)}分${Math.floor(current % 60)}秒`);
-  trackElapsed.textContent = formatTrackTime(current);
-  trackDuration.textContent = duration ? formatTrackTime(duration) : '—:—';
-}
+  function updateTrackButton(playing) {
+    trackRequested = playing;
+    trackToggle.setAttribute('aria-label', `${title}を${playing ? '一時停止' : '再生'}`);
+    trackPlayIcon.toggleAttribute('hidden', playing);
+    trackPauseIcon.toggleAttribute('hidden', !playing);
+  }
 
-trackControls.hidden = false;
-trackToggle.addEventListener('click', async () => {
-  const requestId = ++trackRequestId;
-  if (trackRequested) {
+  function updateTrackTime() {
+    const duration = Number.isFinite(trackAudio.duration) ? trackAudio.duration : 0;
+    const current = trackAudio.currentTime;
+    trackSeek.disabled = duration <= 0 || Boolean(trackAudio.error);
+    trackSeek.max = duration;
+    trackSeek.value = current;
+    trackSeek.style.setProperty('--progress', `${duration ? current / duration * 100 : 0}%`);
+    trackSeek.setAttribute('aria-valuetext', `${Math.floor(current / 60)}分${Math.floor(current % 60)}秒`);
+    trackElapsed.textContent = formatTrackTime(current);
+    trackDuration.textContent = duration ? formatTrackTime(duration) : '—:—';
+  }
+
+  function stopTrack() {
+    ++trackRequestId;
     trackAudio.pause();
     updateTrackButton(false);
     trackStatus.textContent = '';
-    return;
   }
 
-  // A small deterrent to casual saving, not encryption or access control.
-  // Keep the source out of the initial HTML/DOM and load only on user request.
-  if (!trackAudio.hasAttribute('src')) {
-    trackAudio.src = atob(['YXNzZXRzL21lZGlh', 'L2hpa2FyaV9ub19r', 'b2t5dS5tcDM='].join(''));
-  } else if (trackAudio.error) {
-    trackAudio.load();
-  }
-  updateTrackButton(true);
-  trackStatus.textContent = '読み込み中…';
-  try {
-    // Call play in the click handler to preserve mobile user activation.
-    await trackAudio.play();
-    if (requestId === trackRequestId) trackStatus.textContent = '';
-  } catch (error) {
-    if (requestId !== trackRequestId) return;
+  stopTracks.set(trackAudio, stopTrack);
+  trackControls.hidden = false;
+  trackToggle.addEventListener('click', async () => {
+    const requestId = ++trackRequestId;
+    if (trackRequested) {
+      trackAudio.pause();
+      updateTrackButton(false);
+      trackStatus.textContent = '';
+      return;
+    }
+
+    stopTracks.forEach((stop, audio) => {
+      if (audio !== trackAudio) stop();
+    });
+
+    // A small deterrent to casual saving, not encryption or access control.
+    // Keep the source out of the initial HTML/DOM and load only on user request.
+    if (!trackAudio.hasAttribute('src')) {
+      trackAudio.src = atob(source.join(''));
+    } else if (trackAudio.error) {
+      trackAudio.load();
+    }
+    updateTrackButton(true);
+    trackStatus.textContent = '読み込み中…';
+    try {
+      // Call play in the click handler to preserve mobile user activation.
+      await trackAudio.play();
+      if (requestId === trackRequestId) trackStatus.textContent = '';
+    } catch (error) {
+      if (requestId !== trackRequestId) return;
+      updateTrackButton(false);
+      trackStatus.textContent = error.name === 'NotAllowedError'
+        ? '再生ボタンをもう一度押してください。'
+        : '音源を再生できませんでした。時間をおいて再度お試しください。';
+    }
+  });
+
+  trackAudio.addEventListener('play', () => {
+    stopTracks.forEach((stop, audio) => {
+      if (audio !== trackAudio) stop();
+    });
+    updateTrackButton(true);
+  });
+  trackAudio.addEventListener('playing', () => { trackStatus.textContent = ''; });
+  trackAudio.addEventListener('pause', () => {
     updateTrackButton(false);
-    trackStatus.textContent = error.name === 'NotAllowedError'
-      ? '再生ボタンをもう一度押してください。'
-      : '音源を再生できませんでした。時間をおいて再度お試しください。';
-  }
-});
-
-trackAudio.addEventListener('play', () => updateTrackButton(true));
-trackAudio.addEventListener('playing', () => { trackStatus.textContent = ''; });
-trackAudio.addEventListener('pause', () => {
-  updateTrackButton(false);
-  if (!trackAudio.error) trackStatus.textContent = '';
-});
-trackAudio.addEventListener('waiting', () => {
-  if (trackRequested) trackStatus.textContent = '読み込み中…';
-});
-trackAudio.addEventListener('ended', () => {
-  updateTrackButton(false);
-  trackStatus.textContent = '再生が終了しました。';
-  updateTrackTime();
-});
-trackAudio.addEventListener('error', () => {
-  ++trackRequestId;
-  updateTrackButton(false);
-  trackSeek.disabled = true;
-  trackStatus.textContent = '音源を再生できませんでした。時間をおいて再度お試しください。';
-});
-['loadedmetadata', 'durationchange', 'timeupdate'].forEach((event) => {
-  trackAudio.addEventListener(event, updateTrackTime);
-});
-trackSeek.addEventListener('input', () => {
-  trackAudio.currentTime = Number(trackSeek.value);
-  updateTrackTime();
+    if (!trackAudio.error) trackStatus.textContent = '';
+  });
+  trackAudio.addEventListener('waiting', () => {
+    if (trackRequested) trackStatus.textContent = '読み込み中…';
+  });
+  trackAudio.addEventListener('ended', () => {
+    updateTrackButton(false);
+    trackStatus.textContent = '再生が終了しました。';
+    updateTrackTime();
+  });
+  trackAudio.addEventListener('error', () => {
+    ++trackRequestId;
+    updateTrackButton(false);
+    trackSeek.disabled = true;
+    trackStatus.textContent = '音源を再生できませんでした。時間をおいて再度お試しください。';
+  });
+  ['loadedmetadata', 'durationchange', 'timeupdate'].forEach((event) => {
+    trackAudio.addEventListener(event, updateTrackTime);
+  });
+  trackSeek.addEventListener('input', () => {
+    trackAudio.currentTime = Number(trackSeek.value);
+    updateTrackTime();
+  });
 });
 
 const revealContact = document.querySelector('.contact__reveal');
