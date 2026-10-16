@@ -28,3 +28,15 @@ Musicセクションで「光の呼吸 (Studio version)」（`assets/media/hikar
 メールアドレスは `script.js` のエンコードされた文字列で管理し、「メールアドレスを表示」の操作後にだけ復元します。初期HTMLや初期表示のDOMにはアドレスと `mailto:` リンクを含めません。
 
 これは単純なメールアドレス収集を抑える簡易対策です。JavaScriptを解析・実行するbotによる取得は防げません。表示後はメールアプリを開くか、アドレスをコピーできます。JavaScriptが無効な場合は有効化の案内を表示します。
+
+## Social sharing (OGP / X)
+
+`index.html` の `description`・`og:description`・`twitter:description` と、`title`・`og:title`・`twitter:title` は同じ内容に保ってください。正規URLは `https://copper-recoil.com/` です。日付が古くならないよう、説明文は個別ライブの日時を含めません。
+
+共有画像は既存の `assets/top.png`（1648×720、約2.29:1）を使用します。`assets/icon.jpg` は400×400のためファビコンとして維持します。共有サービスによって画像の端がトリミングされる場合があります。画像を差し替える際は、OGPとX両方のURL・altおよびOGPの寸法とMIMEタイプを更新してください。キャッシュとの区別には新しいファイル名を推奨します。
+
+マージ後の確認手順:
+
+1. GitHub Pagesのデプロイ完了後、公開HTMLのheadにOGPとTwitter Cardがあることを確認。
+2. 画像URLが認証不要でHTTP 200・`image/png`を返すことを確認。
+3. Facebook Sharing Debuggerで再取得し、XとDiscordでも共有時のカードを確認。各サービスのキャッシュにより反映が遅れる場合があります。
