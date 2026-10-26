@@ -8,6 +8,27 @@
     <title>Copper Recoil — Official Website</title>
     <link rel="canonical" href="https://copper-recoil.com/" />
 
+    <!-- GA4: load the Google tag only on production domains. -->
+    <script>
+      (() => {
+        const measurementId = 'G-C1L1YQN8KW'; // Google Analytics > 管理 > データ ストリーム > 測定ID
+        const productionHosts = ['copper-recoil.com', 'www.copper-recoil.com'];
+        if (!/^G-[A-Z0-9]+$/.test(measurementId)
+          || !productionHosts.includes(window.location.hostname)) return;
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        // config sends the initial page_view automatically; do not send it twice.
+        window.gtag('config', measurementId);
+
+        const tag = document.createElement('script');
+        tag.async = true;
+        tag.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+        document.head.appendChild(tag);
+      })();
+    </script>
+
     <!-- Social sharing: use absolute HTTPS URLs so crawlers can resolve assets. -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
