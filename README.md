@@ -33,8 +33,34 @@ python3 -m http.server 4173
 
 - 有効な形式の測定IDが設定され、ホスト名が `copper-recoil.com` または `www.copper-recoil.com` のときだけGoogleタグを非同期で読み込みます。`localhost`、IPアドレス、GitHub Pagesのプレビュー用ドメインでは計測しません。
 - 初回の `page_view` はGoogleタグの `config` が自動送信します。手動で同じイベントを追加送信していません。流入元や端末などはGA4の標準レポートで確認できます。
-- 拡張計測を有効にすると、ページの90%まで到達したスクロールや外部サイトへのクリックも計測します。独自の音楽プレーヤーの再生、メールアドレスの表示・コピーは今回の計測対象に含みません。
+- 拡張計測を有効にすると、ページの90%まで到達したスクロールや外部サイトへのクリックも計測します。楽曲の試聴と問い合わせ操作は、下記のカスタムイベントで計測します。
 - 測定を止める場合は `measurementId` を空文字に戻して再デプロイします。
+
+### 試聴・問い合わせのカスタムイベント
+
+`script.js` から以下のイベントを送信します。Googleタグが無効なローカル環境では送信せず、計測処理が失敗してもプレーヤーや問い合わせ操作を継続します。
+
+| イベント名 | 記録する操作 |
+| --- | --- |
+| `music_start` | 実際の再生開始。再生失敗は含めず、一時停止・シーク・バッファリングからの再開では重複送信しません。曲の終了後に再度再生した場合は新しく記録します。 |
+| `music_complete` | 再生開始後に音源の末尾へ到達。シークで末尾に移動した場合も含むため、全編を聴いたことの証明ではありません。 |
+| `contact_reveal` | メールアドレスの表示。ページ表示ごとに最大1回です。 |
+| `contact_copy` | メールアドレスのコピー成功。コピー失敗は含めません。 |
+| `contact_email_click` | メールリンクのクリック。メールアプリの起動成功や送信完了は確認しません。 |
+
+楽曲イベントには `track_id`（audio要素のID）と `track_name`（画面の曲名）を付けます。問い合わせのカスタムイベントにはメールアドレスやリンクURLを付けません。問い合わせ操作は送信・予約の完了数とは区別してください。
+
+イベント数の確認だけなら、GA4側で同名イベントを新規作成する必要はありません。曲名別のレポートや探索を作る場合は「管理」→「データの表示」→「カスタム定義」で、範囲「イベント」、イベントパラメータ `track_name` のカスタムディメンション（名前の例: 楽曲名）を登録します。必要に応じて `track_id` も登録してください（[公式手順](https://support.google.com/analytics/answer/14239696?hl=ja)）。
+
+### SNSプロフィール用の流入計測URL
+
+各SNSのプロフィールに掲載する公式サイトのURLです。サイトからSNSへ移動するリンクには付けません。
+
+- X: https://copper-recoil.com/?utm_source=x&utm_medium=social&utm_campaign=profile
+- Instagram: https://copper-recoil.com/?utm_source=instagram&utm_medium=social&utm_campaign=profile
+- TikTok: https://copper-recoil.com/?utm_source=tiktok&utm_medium=social&utm_campaign=profile
+
+GA4の「トラフィック獲得」で「セッションの参照元 / メディア」を確認し、`x / social`、`instagram / social`、`tiktok / social` を比較します。ライブ告知など用途を分ける場合は、同じ告知のリンクで共通の `utm_campaign` を使ってください。
 
 ### 公開後の確認
 
@@ -42,6 +68,8 @@ python3 -m http.server 4173
 2. 開発者ツールのNetworkで `gtag/js?id=G-...` が読み込まれ、`collect` リクエストの `tid` が設定した測定ID、`en` が `page_view` になっていることを確認します。
 3. GA4の「レポート」→「リアルタイム」で自分のアクセスを確認します。ページ下部までスクロールしたりSNSリンクを開いたりして、`scroll`・`click` も確認します。
 4. 通常のレポートへの反映には24〜48時間かかることがあります。まずリアルタイムで確認してください（[Google公式のデータ収集確認手順](https://support.google.com/analytics/answer/9333790?hl=ja)）。
+5. 楽曲を再生して `music_start`、一時停止・再開で開始イベントが増えないこと、末尾まで進めて `music_complete` を確認します。終了後に再度再生すると、新しい `music_start` が発生します。
+6. メールアドレス表示・コピー・メールリンクのクリックで、それぞれ `contact_reveal`・`contact_copy`・`contact_email_click` を確認します。メールの送信は不要です。内部トラフィックを除外している場合は、除外対象外の回線で確認してください。
 
 ## Music
 

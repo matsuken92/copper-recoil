@@ -1,3 +1,13 @@
+// Analytics must never interrupt playback or contact actions, even if blocked.
+function trackEvent(name, parameters = {}) {
+  if (typeof window.gtag !== 'function') return;
+  try {
+    window.gtag('event', name, parameters);
+  } catch {
+    // Keep the site usable if the analytics integration fails.
+  }
+}
+
 const menu = document.querySelector('.menu-panel');
 const openButton = document.querySelector('.menu-trigger');
 const closeButton = document.querySelector('.menu-close');
@@ -60,6 +70,8 @@ document.querySelectorAll('.music-player').forEach((player) => {
   const trackStatus = player.querySelector('.music-player__status');
   let trackRequested = false;
   let trackRequestId = 0;
+  let trackStarted = false;
+  const trackParameters = { track_id: trackAudio.id, track_name: title };
 
   function formatTrackTime(seconds) {
     const total = Math.max(0, Math.floor(seconds || 0));
@@ -135,7 +147,14 @@ document.querySelectorAll('.music-player').forEach((player) => {
     });
     updateTrackButton(true);
   });
-  trackAudio.addEventListener('playing', () => { trackStatus.textContent = ''; });
+  trackAudio.addEventListener('playing', () => {
+    trackStatus.textContent = '';
+    // Count actual playback once, not play attempts, resumes, or buffering.
+    if (!trackStarted) {
+      trackStarted = true;
+      trackEvent('music_start', trackParameters);
+    }
+  });
   trackAudio.addEventListener('pause', () => {
     updateTrackButton(false);
     if (!trackAudio.error) trackStatus.textContent = '';
@@ -147,6 +166,11 @@ document.querySelectorAll('.music-player').forEach((player) => {
     updateTrackButton(false);
     trackStatus.textContent = '再生が終了しました。';
     updateTrackTime();
+    // ended means the playhead reached the end, including after seeking.
+    if (trackStarted) {
+      trackStarted = false;
+      trackEvent('music_complete', trackParameters);
+    }
   });
   trackAudio.addEventListener('error', () => {
     ++trackRequestId;
@@ -181,12 +205,19 @@ revealContact.addEventListener('click', () => {
   revealContact.hidden = true;
   contactStatus.textContent = 'アドレスを選ぶとメールアプリが開きます。';
   contactEmail.focus({ preventScroll: true });
+  trackEvent('contact_reveal');
 }, { once: true });
+
+contactEmail.addEventListener('click', () => {
+  // This records intent to contact, not a sent email. Do not send the address.
+  trackEvent('contact_email_click');
+});
 
 copyContact.addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(contactEmail.textContent);
     contactStatus.textContent = 'メールアドレスをコピーしました。';
+    trackEvent('contact_copy');
   } catch {
     contactStatus.textContent = 'コピーできませんでした。アドレスを選択してコピーしてください。';
   }
