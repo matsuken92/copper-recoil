@@ -11,7 +11,7 @@ https://copper-recoil.com/
 python3 -m http.server 4173
 ```
 
-掲載情報は `index.html` で管理しています。ライブは12月19日（土）・錦糸町パピーズ・出演17:40〜を掲載し、年は未指定のため表示していません。
+掲載情報は `index.html` で管理しています。ライブ予定は Live セクション（`id="live"`）に記載しています。
 
 ## Google Analytics 4（GA4）
 
