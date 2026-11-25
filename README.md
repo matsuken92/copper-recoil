@@ -52,15 +52,11 @@ python3 -m http.server 4173
 
 イベント数の確認だけなら、GA4側で同名イベントを新規作成する必要はありません。曲名別のレポートや探索を作る場合は「管理」→「データの表示」→「カスタム定義」で、範囲「イベント」、イベントパラメータ `track_name` のカスタムディメンション（名前の例: 楽曲名）を登録します。必要に応じて `track_id` も登録してください（[公式手順](https://support.google.com/analytics/answer/14239696?hl=ja)）。
 
-### SNSプロフィール用の流入計測URL
+### SNSプロフィール用のURL
 
-各SNSのプロフィールに掲載する公式サイトのURLです。サイトからSNSへ移動するリンクには付けません。
+X・Instagram・TikTok・YouTubeのプロフィールには、共通の公式サイトURL `https://copper-recoil.com/` を掲載します。
 
-- X: https://copper-recoil.com/?utm_source=x&utm_medium=social&utm_campaign=profile
-- Instagram: https://copper-recoil.com/?utm_source=instagram&utm_medium=social&utm_campaign=profile
-- TikTok: https://copper-recoil.com/?utm_source=tiktok&utm_medium=social&utm_campaign=profile
-
-GA4の「トラフィック獲得」で「セッションの参照元 / メディア」を確認し、`x / social`、`instagram / social`、`tiktok / social` を比較します。ライブ告知など用途を分ける場合は、同じ告知のリンクで共通の `utm_campaign` を使ってください。
+SNS別の短縮URLやUTMによる振り分けは使用しません。流入元はGA4が取得できたリファラをもとに確認します。試聴・問い合わせのカスタムイベントは通常のURLでも計測します。
 
 ### 公開後の確認
 
